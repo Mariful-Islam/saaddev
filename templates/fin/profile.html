@@ -1,0 +1,56 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Profile | {{ user.name }}{% endblock title %}
+{% block content %}
+<main>
+    <div class="profile">
+        {% if messages %}
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+        {% endif %}
+
+
+        {% if profile.user.username == username %}
+        <div class="profile-detail">
+            <div class="profile-image">
+                {% if profile.get_avater %}
+                <img src="{{ profile.get_avater }}" alt="">
+                {% else %}
+                <img src="{% static 'images/user.png' %}" alt="">
+                {% endif %}
+            </div>
+            <div class="profile-name">
+                Name: {{ profile.get_name }}
+            </div>
+            <div class="profile-username">
+                Username: {{ profile.get_username }}
+            </div>
+            <div class="profile-balance">
+                Balance: {{ profile.get_balance|floatformat:2 }}$
+            </div>
+            <div class="profile-id">
+                Account ID: {{ profile.get_account_id }}
+            </div>
+            <div class="profile-bio">
+                <b>Bio</b> <br>{{ profile.bio }}
+            </div>
+            <div class="profile-address">
+                <b>Address</b> <br>{{ profile.address }}
+            </div>
+
+            {% else %}
+            <p>Add profile detail <a href="{% url 'add-profile' %}">here</a></p>
+        </div>
+        {% endif %}
+
+        {% if not previous_bank_account.user %}
+        <div class="bank-account">
+            Hey Mr. {{ username }}, you have no bank account. Create your bank account here
+            <a href="{% url 'bank-account' %}">Bank Account</a>
+        </div>
+        {% endif %}
+
+    </div>
+</main>
+{% endblock content %}

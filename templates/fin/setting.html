@@ -1,0 +1,16 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %} | Setting{% endblock title %}
+{% block content %}
+<main>
+    <div class="user-setting">
+        <a href="{% url 'edit-user' request.user.username %}">Edit User</a>
+        <br>
+        {% if profile.user.username == request.user.username %}
+        <a href="{% url 'edit-profile' request.user.username %}">Edit Profile</a>
+        {% else %}
+        <a href="{% url 'add-profile' %}">Add Profile</a>
+        {% endif %}
+    </div>
+</main>
+{% endblock content %}

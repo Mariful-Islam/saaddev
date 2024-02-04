@@ -1,0 +1,30 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Log In{% endblock title %}
+{% block content %}
+<main>
+    <div class="bank-account">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% if messages %}
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+            {% endif %}
+
+            {% csrf_token %}
+            <br>
+            <label for="id_account_id">Account id:</label>
+            <input type="text" name="account_id" maxlength="10" value="{{account_id}}" required id="id_account_id">
+            <br>
+            <label for="id_balance">Balance:</label>
+            <input type="number" step="0.01" name="balance">
+            <br>
+            <input type="submit" value="Create" />
+        </form>
+    </div>
+</main>
+<script>
+    const input = document.querySelector('.bank-account form input')
+
+</script>
+{% endblock content %}

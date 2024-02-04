@@ -1,0 +1,46 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %} | Ledger {% endblock title %}
+{% block content %}
+<main>
+    <div class="ledger">
+        <div class="ledger-wrapper">
+            <h2 style="font-size: 20px; text-align: center; font-weight: 700; text-transform: uppercase;">Ledgers</h2>
+            {% if no_ledger %}
+            <div class="ledger-message">
+
+                {{no_ledger}}
+
+            </div>
+
+            {% endif %}
+            <div>
+                <a href="../static/files/ledger.csv" download>CSV</a>
+            </div>
+            <ul style="height: 80px; overflow-y: hidden; ">
+                <li style="background-color: aqua;">
+                    <div><b>Sender-Receiver</b></div>
+                    <div><b>Transaction ID</b></div>
+                    <div><b>Time</b></div>
+                </li>
+            </ul>
+            <ul>
+
+                {% for ledger in ledgers %}
+                <li>
+                    <div>
+                        <b>{{ledger.sender}}</b> sent <b>{{ledger.amount}}$</b> to
+                        <b>{{ledger.receiver}}</b>.
+                    </div>
+                    <div>
+                        {{ledger.transaction_id}}
+                    </div>
+                    <div>{{ledger.time}}</div>
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock content %}

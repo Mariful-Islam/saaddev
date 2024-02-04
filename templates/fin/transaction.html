@@ -1,0 +1,43 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Transaction{% endblock title %}
+{% block content %}
+<main>
+    <div class="ledger">
+        <div class="ledger-wrapper">
+            <h2 style="font-size: 20px; text-align: center; font-weight: 700; text-transform: uppercase;">Transactions
+            </h2>
+            {% if no_ledger %}
+            <div class="ledger-message">
+                {{no_tran}}
+            </div>
+            {% endif %}
+            <div>
+                <a href="../static/files/Transactions-{{request.user.username}}.csv" download>CSV</a>
+            </div>
+            <ul style="height: 80px; overflow-y: hidden; ">
+                <li style="background-color: aqua;">
+                    <div><b>Sender-Receiver</b></div>
+                    <div><b>Transaction ID</b></div>
+                    <div><b>Time</b></div>
+                </li>
+            </ul>
+            <ul>
+
+                {% for transaction in transactions %}
+                <li>
+                    <div>
+                        <b>{{transaction.sender}}</b> sent <b>{{transaction.amount}}$</b> to
+                        <b>{{transaction.receiver}}</b>.
+                    </div>
+                    <div>
+                        {{transaction.transaction_id}}
+                    </div>
+                    <div>{{transaction.time}}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock content %}

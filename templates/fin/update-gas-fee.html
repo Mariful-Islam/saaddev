@@ -1,0 +1,17 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Transfer{% endblock title %}
+{% block content %}
+<main>
+    <div class="transfer">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="gasfee">Gas Fee</label>
+            <input type="number" step="0.001" name="gas_fee" value="{{previous_gas_fee}}"
+                placeholder="Enter New Gas Amount">
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</main>
+
+{% endblock content %}

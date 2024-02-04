@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Service{% endblock title %}
+{% block content %}
+
+
+<!-- Service Start -->
+<main class="service" id="service">
+  <div class="heading">
+    <h3>Services</h3>
+  </div>
+
+  <div class="service__list">
+    <ul class="service__item">
+      {% for service in services %}
+      <a href="{% url 'single-service' service.name %}">
+        <li>{{ service.name }}</li>
+      </a>
+      {% endfor %}
+    </ul>
+  </div>
+</main>
+
+<!-- Service End -->
+
+{% endblock content %}

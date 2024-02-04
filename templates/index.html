@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Home{% endblock title %}
+{% block content %}
+
+<!-- First look design start  -->
+<div class="myself">
+  <div class="myself__wrapper">
+    <h1>
+      Hi !! <br>
+      This is Mariful <br></h1>
+    <p>I am a Software Engineer</p>
+    <div class="line">
+    </div>
+  </div>
+
+</div>
+
+
+<!-- 
+ First look design End  -->
+
+
+<!-- Service Start -->
+<main class="service" id="service">
+  <div class="heading">
+    <h3>Services</h3>
+  </div>
+
+  <div class="service__list">
+    <ul class="service__item">
+      {% for service in services %}
+      <a href="{% url 'single-service' service.name %}">
+        <li>{{ service.name }}</li>
+      </a>
+      {% endfor %}
+    </ul>
+  </div>
+  <a id="see-all" href="{% url 'service' %}">See All</a>
+</main>
+
+<!-- Service End -->
+
+<!-- Project Start -->
+
+<main class="project" id="project">
+  <div class="heading">
+    <h3>Project</h3>
+  </div>
+  <div class="project__list">
+    {% for project in projects %}
+    <div>
+      <div class="project__image">
+        <a href="{% url 'single-project' project.name %}"><img src="{{ project.image.url }}" alt="" /></a>
+      </div>
+
+      <div class="project__detail">
+        <div class="project__name">
+          <a href="{% url 'single-project' project.name %}">
+            <p>{{ project.name }}</p>
+          </a>
+          <hr>
+        </div>
+
+        <div class="project__description">
+          <p>{{ project.description|slice:"0:100" }}</p>
+
+        </div>
+
+        <div class="project__stack">
+          <ul>
+            {% for stack in project.get_stack_list %}
+            <li>{{ stack }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a id="see-all" href="{% url 'project' %}">See All</a>
+</main>
+
+<!-- Project End -->
+
+<!-- Client Section Start -->
+
+
+<main class="client" id="client">
+  <div class="heading">
+    <h3>Our Clients</h3>
+  </div>
+
+
+
+  <div class="client__list">
+    <div class="arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+        id="arrow-left"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <path
+          d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+      </svg>
+    </div>
+
+    <div id="client__slider">
+      {% for client in clients %}
+      <div class="client__detail client{{ client.id }}">
+        <img class="client__image" src="{{ client.image.url }}" alt="" />
+        <div class="client__name">
+          <p>{{ client.name }}</p>
+        </div>
+        <div class="client__review">
+          <p>{{ client.review }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"
+        id="arrow-right"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <path
+          d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+      </svg>
+    </div>
+
+  </div>
+</main>
+
+<!-- Client Section End -->
+
+
+{% endblock content %}

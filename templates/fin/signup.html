@@ -1,0 +1,15 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Sign Up{% endblock title %}
+{% block content %}
+<main>
+    <div class="signup">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Sign Up" />
+            <p>Already have account <a href="{% url 'login' %}">Login</a></p>
+        </form>
+    </div>
+</main>
+{% endblock content %}

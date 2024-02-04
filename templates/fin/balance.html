@@ -1,0 +1,12 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Balance{% endblock title %}
+{% block content %}
+<main>
+    <div class="balance">
+        <div class="profile-balance">
+            Balance: {{ balance|floatformat:2 }}$
+        </div>
+    </div>
+</main>
+{% endblock content %}

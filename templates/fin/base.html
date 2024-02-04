@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Digital Bank {% block title %} {% endblock title %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/Fin.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fin.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar has-shadow">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'home' %}">
+                    <img src="{% static 'images/Fin.png' %}" alt="Digital Bank">
+                </a>
+                <div class="navbar-burger burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <small><a href="{% url 'fin-home' %}">Home</a></small>
+                    </div>
+
+                    {% if request.user.is_authenticated %}
+                    <div class="navbar-item transaction">
+                        <small><a href="{% url 'transaction' %}">Transaction</a></small>
+                        <span id="notification-count">{{ count }}</span>
+                    </div>
+                    <div class="navbar-item">
+                        <small><a href="{% url 'ledger' %}">Ledger</a></small>
+                        <span id="notification-count">{{ ledger_count }}</span>
+                    </div>
+                    <div class="navbar-item">
+                        <small><a href="{% url 'transfer' %}">Transfer</a></small>
+                    </div>
+                    <div class="navbar-item">
+                        <small><a href="{% url 'balance' request.user.username %}">Balance</a></small>
+                    </div>
+                    <div class="navbar-item">
+                        <small><a href="{% url 'friends' %}">Friends</a></small>
+                    </div>
+                    {% else %}
+                    <div class="navbar-item">
+                        <small><a href="{% url 'login' %}">Login</a></small>
+                    </div>
+                    <div class="navbar-item">
+                        <small><a href="{% url 'signup' %}">Signup</a></small>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <div class="navbar-link">
+                            <img src="{{ request.user.avater.url }}" alt="{% static 'images/user.png' %}"
+                                style="width: 1.75rem; height: 1.75rem; border-radius: 50%; object-fit: cover;margin-right: 10px;">
+                            {{ request.user.username }}
+                        </div>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{% url 'profile' request.user.username %}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-user-circle-o"></i>
+                                </span> Profile
+                            </a>
+                            <a class="navbar-item" href="{% url 'setting' %}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-bug"></i>
+                                </span> Setting
+                            </a>
+                            <a class="navbar-item" href="{% url 'logout' %}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-sign-out"></i>
+                                </span> Log Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    {% block content %}
+    {% endblock content %}
+
+    <footer>
+        <ul>
+            <li><a href="{% url 'developer' %}">Developer API</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar-menu')
+        const menubar = document.querySelector('.navbar-burger')
+
+        menubar.addEventListener('click', () => {
+            navbar.classList.toggle('is-active')
+
+        })
+
+    </script>
+</body>
+
+</html>

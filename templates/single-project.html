@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Project | {{ project.name }}{% endblock title %}
+{% block content %}
+<main>
+    <div class="single__project">
+        <div class="sp__header">
+            <div class="sp__name">
+                <h2>{{ project.name }}</h2>
+            </div>
+            <div class="sp__link">
+                <a href="{{ project.github }}" target="_blank"><i class="fa fa-github"></i></a>
+                <a href="{{ project.file.url }}" download="{{ project.file.url }}"><i class="fa fa-download"></i></a>
+            </div>
+        </div>
+        <div class="sp__image">
+            <img src="{{ project.image.url }}" />
+        </div>
+        <div class="sp__stack">
+            <ul>
+                {% for stack in project.get_stack_list %}
+                <li>{{ stack }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="sp__requirement">
+            <h4>Requirement</h4>
+            <p>{{ project.requirement }}</p>
+        </div>
+        <div class="sp__description">
+            <h4>Description</h4>
+            <p>{{ project.description }}</p>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}

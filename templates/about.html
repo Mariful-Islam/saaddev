@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- About Page Start -->
+
+<main class="about">
+  <div class="about__container">
+    <!-- My Profile address and contact Start -->
+
+    <div class="profile__container">
+      <div class="profile__wrapper">
+        <div class="profile">
+          <div class="profile__image">
+            <img class="my-image" src="{{ myprofile.image.url }}" alt="saad" />
+          </div>
+          <div class="profile__name">
+            <h3>{{ myprofile.name }}</h3>
+            <p>{{ myprofile.job }}</p>
+          </div>
+        </div>
+        <div class="profile__contact">
+          <ul class="contact__list">
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" id="address">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                <path d="M10 12h4v4h-4z" />
+              </svg>
+              {{ myprofile.address }}
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                <path d="M3 7l9 6l9 -6" />
+              </svg>
+              {{ myprofile.email }}
+            </li>
+            <!-- <li>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+              </svg>
+              +8801987202937
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                <path
+                  d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+              </svg>
+              01987202937
+            </li> -->
+            <li>
+              <a href=" https://github.com/Mariful-Islam/"><svg xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24"
+                  stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+                </svg>{{ myprofile.github }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- My Profile address and contact End-->
+
+    <!-- Skill section start -->
+
+    <div class="skill__container">
+      <div class="skill__wrapper">
+        <div class="skill__header">
+          <h3>
+            Skills
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon__skill icon-tabler icon-tabler-code" width="24"
+              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M7 8l-4 4l4 4" />
+              <path d="M17 8l4 4l-4 4" />
+              <path d="M14 4l-4 16" />
+            </svg>
+            <hr />
+          </h3>
+        </div>
+        <div class="skill__name">
+          <ul>
+            {% for skill in skills %}
+            <li>{{ skill.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Skill section End -->
+
+    <!-- Experience section start -->
+
+    <div class="experience__container">
+      <div class="experience__wrapper">
+        <div class="experience__header">
+          <h3>
+            Experience
+            <hr />
+          </h3>
+        </div>
+        <div class="experience__list">
+          {% for experience in experiences %}
+          <div>
+            <div class="experience">
+              <p>{{ experience.year }}</p>
+              <p>{{ experience.company_name }}</p>
+              <p>{{ experience.job_title }}</p>
+            </div>
+            <div class="experience__detail">
+              <ul>
+                <li>{{ experience.job_role }}</li>
+              </ul>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Experience section End -->
+  </div>
+</main>
+{% endblock content %}

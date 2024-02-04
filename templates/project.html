@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Projects{% endblock title %}
+{% block content %}
+
+<main class="project" id="project">
+  <div class="heading">
+    <h3>Project</h3>
+  </div>
+
+  <!-- Project Statstics Start -->
+  <div class="table">
+    <div class="table_header">
+      <p>SL No</p>
+      <p>Name</p>
+      <p>Brief</p>
+      <p>Status</p>
+      <p>Github</p>
+    </div>
+    <div class="table_data" style="color: white;">
+      {% for stat in project_statstics %}
+      <p>{{ stat.id }}</p>
+      <p>{{ stat.name }}</p>
+      <p>{{ stat.brief }}</p>
+      <p>{{ stat.get_status }}</p>
+      <p><a href="{{ stat.github }}">View</a></p>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Project Statstics End -->
+
+  <div class="project__list">
+    {% for project in projects %}
+    <div>
+      <div class="project__image">
+        <a href="{% url 'single-project' project.name %}"><img src="{{ project.image.url }}" alt="" /></a>
+      </div>
+
+      <div class="project__detail">
+
+        <div class="project__name">
+          <a href="{% url 'single-project' project.name %}">
+            <p>{{ project.name }}</p>
+          </a>
+          <hr>
+        </div>
+        <div class="project__description">
+          <p>{{ project.description|slice:"0:100" }}</p>
+        </div>
+        <div class="project__stack">
+          <ul>
+            {% for stack in project.get_stack_list %}
+            <li>{{ stack }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+
+
+
+{% endblock content %}

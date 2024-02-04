@@ -1,0 +1,16 @@
+{% extends 'fin/base.html' %}
+{% load static %}
+{% block title %}| Edit User | {{request.user.name}}{% endblock title %}
+{% block content %}
+<main>
+    <div class="edit-user">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" value={{ user.name }} placeholder="Name">
+            <input type="text" name="username" value={{ user.username }} placeholder="Username">
+            <input type="text" name="email" value={{ user.email }} placeholder="Email">
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</main>
+{% endblock content %}

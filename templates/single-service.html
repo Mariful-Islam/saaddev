@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}| Service | {{ service.name }}{% endblock title %}
+{% block content %}
+
+<main>
+    <div class="container">
+        <div class="wrapper">
+            <div class="heading">
+                <h3>Service</h3>
+            </div>
+            <div class="ss__detail">
+                <div class="ss__name">
+                    <p>{{ service.name }}</p>
+                </div>
+                <div class="ss__description">
+                    <p>{{ service.description }}</p>
+                    <img src="{{ service.image.url }}" style="height: 300px; width: auto; object-fit: cover;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+{% endblock content %}
