@@ -17,7 +17,7 @@ urlpatterns = [
     path('payments/', payments),
     path('make_payment/', make_payment),
     path('payment_history/<str:username>/', payment_history),
-    path('payment_confirmation/', payment_confirmation),
+    path('payment_confirmation/<str:mess>/', payment_confirmation),
     path('leave_request/', leave_request),
     path('username_verification/<str:username>/', username_verification),
     path('edit_info/<str:username>/', edit_info)

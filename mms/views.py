@@ -51,7 +51,16 @@ def login(request):
     if request.method == "POST":
         username = request.data.get('username')
         password = request.data.get('password')
-        print(username, password)
+
+
+        try:
+            global mess
+            mess = Student.objects.get(account__username=username).mess.mess_name
+
+        except:
+            mess = Mess.objects.get(owner=username).mess_name
+
+
 
         user = None
         if not user:
@@ -60,7 +69,7 @@ def login(request):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'username': username, 'token': token.key}, status=status.HTTP_200_OK)
+            return Response({'username': username, 'token': token.key, 'mess': mess}, status=status.HTTP_200_OK)
 
         return Response('Invalid Credintial')
     return Response()
@@ -78,12 +87,16 @@ def logout(request):
             return Response({'erroe': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def students(request):
-    student = Student.objects.all()
+    if request.method == "POST":
+        mess = request.data['mess']
 
-    serializer = StudentSerializer(student, many=True)
-    return Response(serializer.data)
+        students = Student.objects.filter(mess__mess_name=mess)
+
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
+    return Response('')
 
 
 @api_view(['GET'])
@@ -110,17 +123,19 @@ def room(request, username):
         return Response("")
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def rooms(request):
-    rooms = Room.objects.all().exclude(student__sts="exit")
-    room_number = []
-    for room in rooms:
-        room_number.append(str(room.room_number))
+    if request.method=="POST":
+        mess = request.data['mess']
 
+        rooms = Room.objects.filter(student__mess__mess_name=mess).exclude(student__sts="exit")
 
+        room_number = []
+        for room in rooms:
+            room_number.append(str(room.room_number))
 
-    # serializer = RoomSerializer(room_number, many=True)
-    return Response(room_number)
+        return Response(room_number)
+    return Response("")
 
 
 @api_view(['GET'])
@@ -152,10 +167,10 @@ def student_form(request):
         division = request.data["division"]
 
         account = User.objects.get(username=username)
-        mess = Mess.objects.get(mess_name=mess)
+        mess_ = Mess.objects.get(mess_name=mess)
 
         student_form = Student.objects.create(
-            mess=mess,
+            mess=mess_,
             account=account,
             nid=nid,
             phone=phone,
@@ -163,26 +178,25 @@ def student_form(request):
             district=district,
             division=division
         )
-        student_form.save()
         student = Student.objects.get(account=account)
 
         try:
             rooms = Room.objects.filter(room_number=room)
             if len(rooms)<3:
                 room_ = Room.objects.create(student=student, room_number=room)
-                room_.save()
+
             else:
                 return Response('Room has 3 of student')
         except:
             room_ = Room.objects.create(student=student, room_number=room)
-            room_.save()
+
 
 
         Floor.objects.create(
             room=room_,
             student=student,
             number=str(room)[0]
-        ).save()
+        )
 
         return Response("Success")
     return Response("")
@@ -215,6 +229,7 @@ def make_payment(request):
     except:
         return Response("")
 
+
 @api_view(['GET'])
 def payment_history(request, username):
     try:
@@ -228,7 +243,8 @@ def payment_history(request, username):
 
 @api_view(['GET', 'POST'])
 def payment_confirmation_list(request, id):
-    pay = Payment.objects.all()
+    mess = request.data.get('mess')
+    pay = Payment.objects.filter(student__mess__mess_name=mess)
     serializer = PaymentSerializer(pay, many=True)
 
     if request.method == "POST":
@@ -246,8 +262,9 @@ def payment_confirmation_list(request, id):
 
 
 @api_view(['GET', 'POST'])
-def payment_confirmation(request):
-    pay = Payment.objects.filter(is_paid=False)
+def payment_confirmation(request, mess):
+
+    pay = Payment.objects.filter(student__mess__mess_name=mess).filter(is_paid=False)
     serializer = PaymentSerializer(pay, many=True)
 
     if request.method == "POST":
@@ -292,6 +309,7 @@ def leave_request(request):
     except:
         return Response("")
 
+
 @api_view(['GET'])
 def username_verification(request, username):
     try:
@@ -300,6 +318,7 @@ def username_verification(request, username):
 
     except:
         return Response("Username Verified")
+
 
 @api_view(['GET', 'PUT'])
 def edit_info(request, username):
@@ -315,7 +334,6 @@ def edit_info(request, username):
 
         user = User.objects.get(username=username)
         user.username=name
-        user.save()
 
         student = Student.objects.get(account__username=username)
 
@@ -326,15 +344,12 @@ def edit_info(request, username):
         student.district = district
         student.division = division
 
-        student.save()
 
         room = Room.objects.get(student__account__username=username)
         room.room_number = room_num
-        room.save()
 
         floor = Floor.objects.get(student__account__username=username)
         floor.number = str(room_num)[0]
-        floor.save()
 
         print(name)
         print(nid)
@@ -342,8 +357,4 @@ def edit_info(request, username):
         return Response("Updated")
 
     return Response("")
-
-
-
-# Report
 
