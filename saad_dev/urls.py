@@ -34,5 +34,8 @@ urlpatterns = [
 
     # mms app
     path('mess/', include('mess_name.urls')),
-    path('mms/', include('mms.urls'))
+    path('mms/', include('mms.urls')),
+
+    # blog
+    path('blog/', include('blog_api.urls')),
 ]

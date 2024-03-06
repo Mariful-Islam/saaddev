@@ -88,6 +88,14 @@ def logout(request):
 
 
 @api_view(['GET', 'POST'])
+def total_students(request):
+    students = Student.objects.all()
+
+    serializer = StudentSerializer(students, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
 def students(request):
     if request.method == "POST":
         mess = request.data['mess']

@@ -1,8 +1,10 @@
 from django.urls import path
-from saad_dev_api.views import contact_api, mail_dlt, mail_view, mail_write, project_component, service_component, services, projects, projects_stats, clients, partnerships, mail, web_mail_auth, update_auth, create_auth 
+from saad_dev_api.views import *
+
 
 urlpatterns = [
     path('services/', services),
+    path('service/<int:id>/', service),
     path('service_component/', service_component),
     path('projects/', projects),
     path('project_component/', project_component),

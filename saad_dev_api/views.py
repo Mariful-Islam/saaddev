@@ -20,6 +20,14 @@ def services(request):
 
 
 @api_view(['GET'])
+def service(request, id):
+    service = Service.objects.get(id=id)
+
+    serializer = ServiceSerializer(service, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def service_component(request):
     
     services = Service.objects.all()[0:3]

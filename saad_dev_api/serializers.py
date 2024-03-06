@@ -19,7 +19,8 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "stack", 
                   "requirement", 
                   "description",
-                  "get_stack_list"
+                  "get_stack_list",
+                  "image_url"
         ]
 
 

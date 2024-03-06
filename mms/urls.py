@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', router),
+    path('total_students/', total_students),
     path('students/', students),
     path('student/<str:username>/', student),
     path('floors/', floors),

@@ -7,10 +7,10 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 
-
 from ecom.models import *
 from ecom.serializers import *
 from Account.models import User
+
 
 @api_view(['GET'])
 def router(response):
@@ -19,7 +19,6 @@ def router(response):
         'api/products'
     ]
     return Response(routes)
-
 
 
 @api_view(['GET'])
@@ -45,7 +44,6 @@ def total_cart(request):
 
 @api_view(['GET'])
 def getCart(request, username):
-
     try:
         user = User.objects.get(username=username)
         if not user:
@@ -57,18 +55,15 @@ def getCart(request, username):
 
     except:
         pass
-    
-    return Response()
 
-       
-    
+    return Response()
 
 
 @api_view(['GET'])
 def getCartItem(request, username, id):
     user = User.objects.get(username=username)
     product = Product.objects.get(id=id)
-    cart = Cart.objects.get(user = user, product = product)
+    cart = Cart.objects.get(user=user, product=product)
 
     serializer = CartSerializer(cart, many=False)
     return Response(serializer.data)
@@ -83,20 +78,20 @@ def addToCart(request, username, id):
         cart = Cart.objects.get(user=user, product=product)
         print(cart)
         if cart:
-            cart.quantity+=1
+            cart.quantity += 1
             cart.save()
         else:
             new_cart = Cart.objects.create(user=user,
-                                    product=product,
-                                    quantity=1)
+                                           product=product,
+                                           quantity=1)
             new_cart.save()
-            
+
     except:
         new_cart = Cart.objects.create(user=user,
-                                    product=product,
-                                    quantity=1)
+                                       product=product,
+                                       quantity=1)
         new_cart.save()
-    
+
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
@@ -129,7 +124,6 @@ def deleteCartItem(request, id):
 
 @api_view(['GET', 'DELETE'])
 def cart_to_order(request, username):
-
     user = User.objects.get(username=username)
 
     delivery_place = DeliveryPlace.objects.get(user=user)
@@ -141,17 +135,14 @@ def cart_to_order(request, username):
                                  product=cart.product,
                                  quantity=cart.quantity,
                                  delivery_place=delivery_place,
-                            )
-        
+                                 )
+
     if request.method == "DELETE":
         for cart in carts:
             cart.delete()
-        
+
         return Response("Order Confirmed")
     return Response()
-
-
-
 
 
 @api_view(['GET', 'POST'])
@@ -161,9 +152,8 @@ def submit_delivery_place(request):
         name = request.data['name']
         print(username, name)
 
-        user = User.objects.get(username = username)
+        user = User.objects.get(username=username)
         place = DeliveryPlace.objects.create(user=user, name=name)
-        
 
         return Response("Delivery place submitted")
     return Response()
@@ -182,17 +172,13 @@ def get_delivery_place(request, username):
         return Response(serializer.data)
 
 
-
-
-
-# order Item 
+# order Item
 
 @api_view(['GET'])
 def order_items(request, username):
+    user = User.objects.get(username=username)
 
-    user = User.objects.get(username = username)
-
-    items = OrderItem.objects.filter(user = user)
+    items = OrderItem.objects.filter(user=user)
 
     serializer = OrderItemSerializer(items, many=True)
 
@@ -217,11 +203,10 @@ def signup(request):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'username': username,'token': token.key}, status=status.HTTP_200_OK)
-        
+            return Response({'username': username, 'token': token.key}, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response()
-
 
 
 @api_view(['GET', 'POST'])
@@ -238,8 +223,8 @@ def login(request):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'username': username,'token': token.key}, status=status.HTTP_200_OK)
-        
+            return Response({'username': username, 'token': token.key}, status=status.HTTP_200_OK)
+
         return Response({'error': 'Invalid Credintial'}, status=status.HTTP_401_UNAUTHORIZED)
     return Response()
 
@@ -249,7 +234,7 @@ def user_info(request, username):
     user = User.objects.get(username=username)
     serializer = AccountSerializer(user, many=False)
     return Response(serializer.data)
-    
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -263,19 +248,11 @@ def logout(request):
             return Response({'erroe': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
-
-
-
-# For admin 
+# For admin
 @api_view(['GET'])
 def all_order_items(request):
     items = OrderItem.objects.all()
 
     serializer = OrderItemSerializer(items, many=True)
 
-    return Response(serializer.data)  
-
-
+    return Response(serializer.data)

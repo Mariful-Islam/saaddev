@@ -1,11 +1,14 @@
 from django.db import models
+from ckeditor.fields import RichTextField
+
+
 # Create your models here.
 
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField()
-    description = models.TextField()
+    description = RichTextField()
 
     def __str__(self):
         return self.name
@@ -27,9 +30,11 @@ class Project(models.Model):
         stacks = self.stack.split(',')
         return stacks
 
+    def image_url(self):
+        return self.image.url
+
 
 class ProjectStatstic(models.Model):
-
     ONGOING_STATUS = 1
     COMPLETED_STATUS = 2
     STATUS_CHOICES = (
@@ -37,16 +42,16 @@ class ProjectStatstic(models.Model):
         (COMPLETED_STATUS, 'Completed')
     )
 
-    project = models.OneToOneField(Project, on_delete = models.CASCADE)
+    project = models.OneToOneField(Project, on_delete=models.CASCADE)
     status = models.IntegerField(
         choices=STATUS_CHOICES, default=ONGOING_STATUS)
 
     def __str__(self):
         return self.project.name
-    
+
     def get_project_name(self):
         return self.project.name
-    
+
     def get_project_link(self):
         return self.project.link
 
@@ -71,7 +76,6 @@ class Partnership(models.Model):
 
     def __str__(self):
         return self.company_name
-
 
 
 class Contact(models.Model):
@@ -107,7 +111,7 @@ class Contact(models.Model):
             return 'Sent'
         elif self.category == 4:
             return 'Spam'
-        
+
     def get_date(self):
 
         day = str(self.time)[8:10]
@@ -140,20 +144,19 @@ class Contact(models.Model):
             month = "Nov"
         elif int(month) == 12:
             month = "Dec"
-        
+
         date.append(day)
         date.append(month)
         date.append(year)
 
         newdate = " ".join(date)
-        
+
         return newdate
-    
 
     def get_time(self):
 
         hour = str(self.time)[11:13]
-        bd_hour = int(hour)+6
+        bd_hour = int(hour) + 6
 
         min = str(self.time)[13:16]
 
@@ -162,11 +165,10 @@ class Contact(models.Model):
         elif bd_hour == 12:
             time = str(bd_hour) + min + " PM"
         elif bd_hour > 12:
-            bd_hour_pm = bd_hour - 12 
+            bd_hour_pm = bd_hour - 12
             time = str(bd_hour_pm) + min + " PM"
 
         return time
-    
 
     class Meta:
         ordering = ['-time']
@@ -179,4 +181,3 @@ class WebMail(models.Model):
 
     def __str__(self):
         return self.username
-

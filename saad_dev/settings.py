@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     # mess management system
     'mms',
     'mess_name',
+    'ckeditor',
+    'blog_api',
 ]
 
 MIDDLEWARE = [
