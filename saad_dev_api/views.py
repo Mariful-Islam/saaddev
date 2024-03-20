@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from .serializers import ServiceSerializer, ProjectSerializer, ProjectStatsticSerializer, ClientSerializer, PartnershipSerializer, ContactSerializer, WebMailSerializer
 from base.utils import get_mail
 from base.models import Client, Partnership, Project, Contact, ProjectStatstic, Service, WebMail
-# Create your views here.
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 @api_view(['GET'])
 def services(request):
@@ -91,7 +91,17 @@ def contact_api(request):
         #     print(spam_keywords[i])
         #     if spam_keywords[i] in username.lower() or email.lower() or subject.lower() or message.lower():
         #         category = 4
+        username = request.data['username']
+        email = request.data['email']
+        subject = request.data['subject']
+        message = request.data['message']
 
+        subject = subject
+        message = f"Name: {username} \nEmail: {email} \nMessage\n{message}"
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [settings.EMAIL_HOST_USER, ]
+
+        send_mail(subject, message, email_from, recipient_list)
         contact = ContactSerializer(data=request.data)
         if contact.is_valid():
             contact.save()
