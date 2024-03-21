@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
     'Account',
+
+    # editor
+    'ckeditor',
 
     # fin app
     'fin',
@@ -56,8 +60,12 @@ INSTALLED_APPS = [
     # mess management system
     'mms',
     'mess_name',
-    'ckeditor',
+    
+    # blog
     'blog_api',
+
+    # admin
+    'dev_admin',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +176,5 @@ EMAIL_HOST_USER = "ruliajenifa@gmail.com"
 EMAIL_HOST_PASSWORD = "kzgx fhms aohl scco"
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+

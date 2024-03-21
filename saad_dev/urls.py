@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dev_admin/', include('dev_admin.urls')),
     path('', include('base.urls')),
     path('saad-dev-api/', include('saad_dev_api.urls')),
 
@@ -39,3 +40,6 @@ urlpatterns = [
     # blog
     path('blog/', include('blog_api.urls')),
 ]
+
+
+
