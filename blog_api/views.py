@@ -5,8 +5,6 @@ from rest_framework.generics import ListAPIView
 from blog_api.models import *
 from blog_api.serializers import *
 
-from rest_framework.pagination import PageNumberPagination
-
 
 # Create your views here.
 
@@ -14,7 +12,6 @@ from rest_framework.pagination import PageNumberPagination
 class Posts(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    pagination_class = PageNumberPagination
 
 
 @api_view(['GET', 'POST'])

@@ -1,7 +1,17 @@
 from django.db import models
-
+from Account.models import User
 
 # Create your models here.
+
+class BlogUser(User):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    username = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    email = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    avater = models.ImageField(blank=True, null=True)
+    followers = models.ForeignKey()
+    
+
+
 
 class Post(models.Model):
     user = models.CharField(max_length=100)
@@ -16,6 +26,9 @@ class Post(models.Model):
 
     def tag_list(self):
         return self.tag.split(',')
+    
+    def update_time(self):
+        return str(self.updated.today())
 
 
 class Comment(models.Model):

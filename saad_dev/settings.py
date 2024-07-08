@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base',
     'saad_dev_api',
     'rest_framework',
+    'drf_yasg',
     "corsheaders",
     'Account',
 
