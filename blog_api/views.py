@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 from blog_api.models import *
 from blog_api.serializers import *
 
@@ -22,39 +24,29 @@ def create_post(request) :
         content = request.data["content"]
         tag = request.data["tag"]
 
-        post = Post.objects.create(user=user, title=title, content=content, tag=tag)
-        post.save()
-
-        return Response("Post Created")
-
+        if user and title and content and tag:
+            post = Post.objects.create(user=user, title=title, content=content, tag=tag)
+            post.save()
+            return Response("Post Created")
+        else:
+            return Response("Form is Blank")
     return Response("")
 
 
-@api_view(['GET'])
-def post_view(request, id) :
-    try :
-        post = Post.objects.get(id=id)
-        serializer = PostSerializer(post, many=False)
-        return Response(serializer.data)
-    except :
-        return Response("")
-
-
-@api_view(['GET', 'DELETE'])
-def post_delete(request, id) :
-    try :
-        post = Post.objects.get(id=id)
-        post.delete()
-        return Response("Deleted Successfully")
-    except :
-        return Response("")
-
+class PostView(RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    lookup_field = 'id'
 
 @api_view(['GET'])
-def user_post(request, user):
-    posts = Post.objects.filter(user=user)
-    serializers = PostSerializer(posts, many=True)
-    return Response(serializers.data)
+def user_post(request, username):
+    try:
+        posts = Post.objects.filter(user = username)
+        serializers = PostSerializer(posts, many=True)
+        return Response(serializers.data)
+    except:
+        return Response("No post found", status=status.HTTP_404_NOT_FOUND)
+
 
 
 @api_view(['GET', 'POST'])
@@ -78,6 +70,10 @@ def comment(request, id):
     serializer = CommentSerializer(comment, many=True)
     return Response(serializer.data)
 
+class CommentView(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
 
 @api_view(['GET'])
 def user_comment(request, user):
@@ -94,12 +90,3 @@ def comment_post(request, comment):
     serializer = PostSerializer(post)
     return Response(serializer.data)
 
-
-@api_view(['GET', 'DELETE'])
-def delete_comment(request, id):
-    try:
-        comment = Comment.objects.get(id=id)
-        comment.delete()
-        return Response("Comment Deleted")
-    except:
-        return Response("")

@@ -1,106 +1,108 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Saad Dev | Email</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  </head>
 
-<body>
+  <body>
     <section>
-        <div class="mail-container">
-            <div class="mail-wrapper">
-                <div class="mail-header">
-                    <div class="mail-title">
-                        <h3>Email</h3>
-
-                    </div>
-                    <div class="mail-search">
-                        <form action="" method="GET">
-                            <input type="text" name="q" placeholder="Search mail">
-                        </form>
-                    </div>
-                    <div class="mail-compose">
-                        <a href="{% url 'mail-compose' %}"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-                                <path d="M13.5 6.5l4 4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="mail-body">
-                    <div class="mail-category">
-                        <ul>
-                            <a href="{% url 'mail' %}">
-                                <li>All <span id="mail-count">{{ all_count }}</span></li>
-                            </a>
-                            <a href="{% url 'mail' %}?q=1">
-                                <li>Inbox<span id="mail-count">{{ inbox_count }}</span></li>
-                            </a>
-                            <a href="{% url 'mail' %}?q=3">
-                                <li>Sent<span id="mail-count">{{ sent_count }}</span></li>
-                            </a>
-                            <a href="{% url 'mail' %}?q=2">
-                                <li>Draft<span id="mail-count">{{ draft_count }}</span></li>
-                            </a>
-                            <a href="{% url 'mail' %}?q=4">
-                                <li>Spam<span id="mail-count">{{ spam_count }}</span></li>
-                            </a>
-
-                        </ul>
-                    </div>
-                    {% block mail %}
-                    <div class="mail-box">
-                        <div class="mail-tool">
-                            <p>Total: <span id="mail-count">{{ count }}</span></p>
-                            <div class="mail-sort">
-                                <label>Sort </label>
-                                <select name="" id="">
-                                    <option value="">A-Z</option>
-                                    <option value="">TRe</option>
-                                    <option value="">Time Asc</option>
-                                    <option value="">Time Des</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        {% if messages %}
-                        {% for message in messages %}
-                        {{message}}
-                        {% endfor %}
-                        {% endif %}
-                        <div class="table-head">
-                            <h4>Name</h4>
-                            <h4>Message</h4>
-                            <h4>Time</h4>
-                        </div>
-                        <div class="table-data">
-                            {% for c in contact %}
-                            <div class="row-data">
-                                <a href="{% url 'mail-view' c.id %}" class="table-row">
-                                    <p>{{ c.username }}</p>
-                                    <p>{{ c.message|slice:"0:50" }}</p>
-                                    <p>{{ c.time|timesince }}</p>
-                                </a>
-                                <span id="mail-type">{{ c.get_category }}</span>
-                                <a href="{% url 'mail-delete' c.id %}">Delete</a>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endblock mail %}
-                </div>
+      <div class="mail-container">
+        <div class="mail-wrapper">
+          <div class="mail-header">
+            <div class="mail-title">
+              <h3>Email</h3>
             </div>
+            <div class="mail-search">
+              <form action="" method="GET">
+                <input type="text" name="q" placeholder="Search mail" />
+              </form>
+            </div>
+            <div class="mail-compose">
+              <a href="{% url 'mail-compose' %}"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-pencil"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"
+                  />
+                  <path d="M13.5 6.5l4 4" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="mail-body">
+            <div class="mail-category">
+              <ul>
+                <a href="{% url 'mail' %}">
+                  <li>All <span id="mail-count">{{ all_count }}</span></li>
+                </a>
+                <a href="{% url 'mail' %}?q=1">
+                  <li>Inbox<span id="mail-count">{{ inbox_count }}</span></li>
+                </a>
+                <a href="{% url 'mail' %}?q=3">
+                  <li>Sent<span id="mail-count">{{ sent_count }}</span></li>
+                </a>
+                <a href="{% url 'mail' %}?q=2">
+                  <li>Draft<span id="mail-count">{{ draft_count }}</span></li>
+                </a>
+                <a href="{% url 'mail' %}?q=4">
+                  <li>Spam<span id="mail-count">{{ spam_count }}</span></li>
+                </a>
+              </ul>
+            </div>
+            {% block mail %}
+            <div class="mail-box">
+              <div class="mail-tool">
+                <p>Total: <span id="mail-count">{{ count }}</span></p>
+                <div class="mail-sort">
+                  <label>Sort </label>
+                  <select name="" id="">
+                    <option value="">A-Z</option>
+                    <option value="">TRe</option>
+                    <option value="">Time Asc</option>
+                    <option value="">Time Des</option>
+                  </select>
+                </div>
+              </div>
+              {% if messages %} {% for message in messages %} {{message}} {%
+              endfor %} {% endif %}
+              <div class="table-head">
+                <h4>Name</h4>
+                <h4>Message</h4>
+                <h4>Time</h4>
+              </div>
+              <div class="table-data">
+                {% for c in contact %}
+                <div class="row-data">
+                  <a href="{% url 'mail-view' c.id %}" class="table-row">
+                    <p>{{ c.username }}</p>
+                    <p>{{ c.message|slice:"0:50" }}</p>
+                    <p>{{ c.time|timesince }}</p>
+                  </a>
+                  <span id="mail-type">{{ c.get_category }}</span>
+                  <a href="{% url 'mail-delete' c.id %}">Delete</a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endblock mail %}
+          </div>
         </div>
+      </div>
     </section>
-
-</body>
-
+  </body>
 </html>

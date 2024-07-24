@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 import json
 
 from mess_name.models import Mess
@@ -57,21 +58,15 @@ def get_admin(request):
     return Response("")
 
 
-@api_view(['GET', 'POST'])
-def get_mess(request):
-    if request.method == "POST":
-        username = request.data['username']
-        password = request.data['password']
+@api_view(['GET'])
+def get_mess(request, username):
+    try:
+        mess = Mess.objects.get(username=username)
+        serializer = MessSerializer(mess, many=False)
+        return Response(serializer.data)
 
-        try:
-            mess = Mess.objects.get(username=username, password=password)
-            serializer = MessSerializer(mess, many=False)
-            return Response(serializer.data)
-
-        except:
-            return Response("No Mess Registered")
-
-    return Response("")
+    except:
+        return Response("No Mess Registered", status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])

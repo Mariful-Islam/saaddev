@@ -14,9 +14,8 @@ def home(request):
     services = Service.objects.all()[0:3]
     projects = Project.objects.all()[0:3]
     clients = Client.objects.all()
-
     context = {'services': services, 'projects': projects, 'clients': clients}
-    return render(request, 'index.html', context)
+    return redirect('schema-swagger-ui')
 
 
 def service(request):

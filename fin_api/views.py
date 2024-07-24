@@ -72,7 +72,7 @@ def login(request):
             token, _ = Token.objects.get_or_create(user=user)
             return Response({'username': username, 'token': token.key}, status=status.HTTP_200_OK)
 
-        return Response('Invalid Credintial')
+        return Response('Invalid Credintial', status=status.HTTP_401_UNAUTHORIZED)
     return Response()
 
 
@@ -107,33 +107,34 @@ def transfer(request):
                 account_id=account_id)
             receiver = receiver_account.user.username
             sender_account = BankAccount.objects.get(user=sender_acc)
-            transfer = Transfer.objects.create(
-                account_id=account_id, amount=amount)
-
-            transfer.save()
-
-            ledger = Ledger.objects.create(sender=sender_account.user.username,
-                                           receiver=receiver_account.user.username,
-                                           amount=amount,
-                                           transaction_id=transaction_id_generator())
-
-            ledger.save()
+           
 
             # balance system
             try:
-                sender_account.balance = sender_account.balance - \
-                                         float(amount) - float(service_charge)
+                if sender_account.balance > float(amount) + float(service_charge):
+                    sender_account.balance = sender_account.balance - float(amount) - float(service_charge)
 
-                receiver_account.balance = receiver_account.balance + \
-                                           float(amount)
+                    receiver_account.balance = receiver_account.balance + float(amount)
 
-                sender_account.save()
-                receiver_account.save()
+                    sender_account.save()
+                    receiver_account.save()
 
-                revenues.revenue += float(service_charge)
-                revenues.save()
+                    revenues.revenue += float(service_charge)
+                    transfer = Transfer.objects.create(account_id=account_id, amount=amount)
 
-                return Response('You successfully sent {}$ to {}.'.format(amount, receiver))
+                    transfer.save()
+
+                    ledger = Ledger.objects.create(sender=sender_account.user.username,
+                                                receiver=receiver_account.user.username,
+                                                amount=amount,
+                                                transaction_id=transaction_id_generator())
+
+                    ledger.save()
+                    revenues.save()
+
+                    return Response('You successfully sent {}$ to {}.'.format(amount, receiver))
+                else:
+                    return Response('Account Balance is insufficient')
 
             except:
                 return Response('There are some issues')
@@ -172,14 +173,10 @@ def balance(request, username):
     return Response({'balance': balance})
 
 
-@api_view(['GET', 'POST'])
-def friends(request):
-    accounts = BankAccount.objects.all()
-    if request.method == "POST":
-        username = request.data['username']
-        user = User.objects.get(username=username)
-        accounts = BankAccount.objects.exclude(user=user)
-
+@api_view(['GET'])
+def people(request, username):
+    user = User.objects.get(username=username)
+    accounts = BankAccount.objects.all().exclude(user=user)
     serializer = BankAccountSerializer(accounts, many=True)
     return Response(serializer.data)
 
@@ -187,7 +184,6 @@ def friends(request):
 @api_view(['GET'])
 def all_user(request):
     accounts = BankAccount.objects.all()
-
     serializer = BankAccountSerializer(accounts, many=True)
     return Response(serializer.data)
 

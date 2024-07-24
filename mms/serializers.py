@@ -52,46 +52,20 @@ class StudentSerializer(ModelSerializer):
     class Meta:
         model = Student
         fields = [
-            'id',
-            'mess',
-            'account',
-            'nid',
-            'phone',
-            'dept',
-            'district',
-            'division',
-            'username',
-            'sts',
-            'email',
-            'room_num',
-            'get_date_created',
-            'get_time_created',
-            'get_date_updated',
-            'get_time_updated'
-        ]
-
-
-class RoomSerializer(ModelSerializer):
-    class Meta:
-        model = Room
-        fields = [
-            'id',
-            'student',
-            'username',
-            'room_number',
-            'sts'
-        ]
-
-
-class FloorSerializer(ModelSerializer):
-    class Meta:
-        model = Floor
-        fields = [
             "id",
-            "student",
-            "room",
-            "student_name",
-            "room_number",
+            "nid",
+            "phone",
+            "dept",
+            "district",
+            "division",
+            "created",
+            "updated",
+            "sts",
+            "mess",
+            "account",
+            "username",
+            "email",
+            "room_num",
         ]
 
 
@@ -101,10 +75,9 @@ class PaymentSerializer(ModelSerializer):
         fields = [
             "id",
             "username",
-            "room_num",
             "tk",
             "month",
             "is_paid",
-            "get_date",
-            "get_time",
+            "room_num",
+            "time"
         ]

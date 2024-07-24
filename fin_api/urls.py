@@ -12,7 +12,7 @@ urlpatterns = [
     path('ledger/', views.ledger),
     path('balance/<str:username>/', views.balance),
 
-    path('friends/', views.friends),
+    path('people/<str:username>/', views.people),
     path('all_user/', views.all_user),
     
     path('create_bank_account/', views.create_bank_account),

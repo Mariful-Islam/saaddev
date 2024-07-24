@@ -3,12 +3,12 @@ from Account.models import User
 
 # Create your models here.
 
-class BlogUser(User):
-    name = models.CharField(max_length=100, blank=True, null=True)
-    username = models.CharField(max_length=100, unique=True, blank=True, null=True)
-    email = models.CharField(max_length=100, unique=True, blank=True, null=True)
-    avater = models.ImageField(blank=True, null=True)
-    followers = models.ForeignKey()
+# class BlogUser(User):
+#     name = models.CharField(max_length=100, blank=True, null=True)
+#     username = models.CharField(max_length=100, unique=True, blank=True, null=True)
+#     email = models.CharField(max_length=100, unique=True, blank=True, null=True)
+#     avater = models.ImageField(blank=True, null=True)
+#     followers = models.ForeignKey(User, on_delete=models.Case)
     
 
 
