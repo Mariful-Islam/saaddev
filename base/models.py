@@ -15,12 +15,12 @@ class Service(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=200)
-    github = models.CharField(max_length=250)
-    link = models.CharField(max_length=250)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    frontend = models.CharField(max_length=250, blank=True, null=True)
+    backend = models.CharField(max_length=250, blank=True, null=True)
+    link = models.CharField(max_length=250, blank=True, null=True)
     image = models.ImageField()
-    stack = models.CharField(max_length=500)
-    requirement = models.TextField()
+    stack = models.CharField(max_length=500, blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):

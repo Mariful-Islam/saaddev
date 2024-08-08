@@ -7,6 +7,7 @@ urlpatterns = [
     path('service/<int:id>/', service),
     path('service_component/', service_component),
     path('projects/', projects),
+    path('project/<int:id>/', project),
     path('project_component/', project_component),
     path('project-statstic/', projects_stats),
     path('clients/', clients),

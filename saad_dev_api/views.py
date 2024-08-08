@@ -46,6 +46,13 @@ def projects(request):
 
 
 @api_view(['GET'])
+def project(request, id):
+    project = Project.objects.get(id=id)
+    serializer = ProjectSerializer(project, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def project_component(request):
     
     projects = Project.objects.all()[0:3]

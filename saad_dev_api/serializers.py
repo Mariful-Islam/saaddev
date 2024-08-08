@@ -13,11 +13,11 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ["id", 
                   "name", 
-                  "github", 
+                  "frontend",
+                  "backend", 
                   "link", 
                   "image", 
                   "stack", 
-                  "requirement", 
                   "description",
                   "get_stack_list",
                   "image_url"
