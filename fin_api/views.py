@@ -7,8 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from fin.forms import CustomUserForm
 
-from fin_api.serializers import AccountSerializer, TransferSerializer, BankAccountSerializer, LedgerSerializer, \
-    UserSerializer, ProfileSerializer, RevenueSerializer
+from fin_api.serializers import *
 from django.contrib import messages
 from fin.models import Ledger, Revenue, User, Transfer, BankAccount, Profile
 from fin.utils import get_transaction, get_transfer, transaction_id_generator

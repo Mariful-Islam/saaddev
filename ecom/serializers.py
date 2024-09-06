@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from ecom.models import *
-from Account.models import User
+from core.models import User
 
 
 class DeliveryPlaceSerializer(ModelSerializer):
@@ -28,7 +28,7 @@ class CartSerializer(ModelSerializer):
         
 
 
-class AccountSerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = [

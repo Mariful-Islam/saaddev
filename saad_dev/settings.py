@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     "corsheaders",
-    'Account',
+    'core',
 
     # editor
     'ckeditor',
@@ -83,7 +83,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'saad_dev.urls'
 
-AUTH_USER_MODEL = 'Account.User'
+AUTH_USER_MODEL = 'core.User'
 
 REST_FRAMEWORK = {
     #  'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -163,13 +163,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_ROOT = BASE_DIR / 'static/images'
+MEDIA_ROOT = BASE_DIR / 'static/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

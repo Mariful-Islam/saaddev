@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
-from Account.models import User
+from core.models import User
 from mess_name.models import Mess
 
 
@@ -10,7 +10,7 @@ class MessSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class AccountSerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = [

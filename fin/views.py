@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from fin.forms import *
 from fin.models import Revenue, Profile, BankAccount, Ledger
-from Account.models import User
+from core.models import User
 
 import json
 from django.conf import settings

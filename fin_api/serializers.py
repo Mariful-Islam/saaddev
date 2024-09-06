@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from Account.models import User
+from core.models import User
 from base.models import *
 from django.contrib.auth.models import AbstractUser
 

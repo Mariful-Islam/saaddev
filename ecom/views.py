@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from ecom.models import *
 from ecom.serializers import *
-from Account.models import User
+from core.models import User
 
 
 @api_view(['GET'])
@@ -232,7 +232,7 @@ def login(request):
 @api_view(['GET'])
 def user_info(request, username):
     user = User.objects.get(username=username)
-    serializer = AccountSerializer(user, many=False)
+    serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 

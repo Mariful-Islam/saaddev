@@ -1,39 +1,41 @@
 from django.db import models
-from Account.models import User
-
+from core.models import *
 # Create your models here.
 
-# class BlogUser(User):
-#     name = models.CharField(max_length=100, blank=True, null=True)
-#     username = models.CharField(max_length=100, unique=True, blank=True, null=True)
-#     email = models.CharField(max_length=100, unique=True, blank=True, null=True)
-#     avater = models.ImageField(blank=True, null=True)
-#     followers = models.ForeignKey(User, on_delete=models.Case)
+
+
+class Profile(SEO):
+    view = models.OneToOneField(User, related_name="view", on_delete=models.CASCADE, null=True, blank=True)
+    follower = models.OneToOneField(User, related_name="follower", on_delete=models.CASCADE, null=True, blank=True)
+    following = models.OneToOneField(User, related_name="following", on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        unique_together = ("follower", "following")
+
+    def __str__(self) -> str:
+        return self.view.username
+
+
+class Post(SEO):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    title = models.CharField(max_length=1000, blank=True, null=True)
+    description = models.TextField()
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True, blank=True, null=True)
+    tag = models.CharField(max_length=500, blank=True, null=True)
+    views = models.IntegerField(default=0, blank=True, null=True)
     
-
-
-
-class Post(models.Model):
-    user = models.CharField(max_length=100)
-    title = models.CharField(max_length=1000)
-    content = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    tag = models.CharField(max_length=500)
-
     def __str__(self):
-        return self.content[0:50]
-
-    def tag_list(self):
-        return self.tag.split(',')
+        return self.description[0:50]
     
-    def update_time(self):
-        return str(self.updated.today())
+    @property
+    def username(self):
+        return self.user.username
 
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     text = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -46,4 +48,7 @@ class Comment(models.Model):
 
     def post_title(self):
         return self.post.title
+    
+    def username(self):
+        return self.user.username
 

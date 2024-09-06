@@ -24,8 +24,7 @@ def signup(request):
 
         user = None
         if not user:
-            user = authenticate(username=username, password=password)
-            print(user)
+            user = authenticate(email=email, password=password)
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
@@ -38,18 +37,19 @@ def signup(request):
 @api_view(['GET', 'POST'])
 def login(request):
     if request.method == "POST":
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
-        print(username, password)
+
+        user = User.objects.get(email=email)
 
         user = None
         if not user:
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             print(user)
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'username': username, 'token': token.key}, status=status.HTTP_200_OK)
+            return Response({'username': user.username, 'userId': user.id, 'token': token.key}, status=status.HTTP_200_OK)
 
         return Response('Invalid Credintial', status=status.HTTP_401_UNAUTHORIZED)
     return Response()

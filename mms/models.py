@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from Account.models import User
+from core.models import User
 from mess_name.models import Mess
 
 

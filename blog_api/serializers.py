@@ -2,11 +2,25 @@ from rest_framework.serializers import ModelSerializer
 from blog_api.models import *
 
 
+
+
 class PostSerializer(ModelSerializer):
     class Meta :
         model = Post
-        fields = ["id", "user", "title", "content", "tag", "tag_list", "updated", "created", "update_time",]
-
+        fields = [
+            "id",
+            "user",
+            "username",
+            "title",
+            "description",
+            "created",
+            "updated",
+            "tag",
+            "views",
+            "meta_title",
+            "meta_description",
+            "slug"
+        ]
 
 class CommentSerializer(ModelSerializer):
     class Meta :
@@ -19,4 +33,5 @@ class CommentSerializer(ModelSerializer):
                   "updated",
                   "post_id",
                   "post_title",
+                    "username"
                   ]
