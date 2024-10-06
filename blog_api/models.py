@@ -16,6 +16,10 @@ class Profile(SEO):
         return self.view.username
 
 
+class Category(models.Model):
+    category = models.JSONField()
+
+
 class Post(SEO):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=1000, blank=True, null=True)

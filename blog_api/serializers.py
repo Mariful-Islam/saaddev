@@ -2,6 +2,10 @@ from rest_framework.serializers import ModelSerializer
 from blog_api.models import *
 
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "email"]
 
 
 class PostSerializer(ModelSerializer):
@@ -35,3 +39,8 @@ class CommentSerializer(ModelSerializer):
                   "post_title",
                     "username"
                   ]
+
+class CategorySerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"

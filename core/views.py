@@ -8,6 +8,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
+from core.models import *
 import json
 
 @api_view(['GET', 'POST'])
@@ -18,6 +19,12 @@ def signup(request):
         password = request.data['password']
         product = request.data['product']
 
+        if User.objects.get(username=username):
+            return Response("Username Exist", status=status.HTTP_401_UNAUTHORIZED)
+        
+        if User.objects.get(email=email):
+            return Response("Email Exist", status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = SignUpSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
