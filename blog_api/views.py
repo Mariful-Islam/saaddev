@@ -104,10 +104,13 @@ class Comments(ListCreateAPIView):
             post = Post.objects.get(slug=post_slug)
             user = User.objects.get(username=username)
 
-            comment = Comment.objects.create(post=post, user=user, text=text)
-            serializer = self.get_serializer(comment)
-            
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if len(text) > 0:
+                comment = Comment.objects.create(post=post, user=user, text=text)
+                serializer = self.get_serializer(comment)
+
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response({'data': 'Comment is empty'}, status=status.HTTP_403_FORBIDDEN)
         except:
             return Response({'data': 'Error create post.'}, status=status.HTTP_400_BAD_REQUEST)
     
